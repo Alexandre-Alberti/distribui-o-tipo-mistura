@@ -37,14 +37,14 @@ def V_neg_log(parametros, DCp, DCE, DCD):
 
 st.title("Distribuição Mista")
 
-p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%)", min_value=0.0, max_value=100.0)
-DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)").split(','))) if st.text_area("Dados completos (separados por vírgula)") else []
-DCE = list(map(float, st.text_area("Dados censurados à esquerda (separados por vírgula)", "").split(','))) if st.text_area("Dados censurados à esquerda (separados por vírgula)") else []
-DCD = list(map(float, st.text_area("Dados censurados à direita (separados por vírgula)", "700, 700").split(','))) if st.text_area("Dados censurados à direita (separados por vírgula)") else []
+p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%):", min_value=0.0, max_value=100.0, key="p_chute")
+DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)", key="DCp").split(','))) if st.text_area("Dados completos (separados por vírgula)", key="DCp") else []
+DCE = list(map(float, st.text_area("Dados censurados à esquerda (separados por vírgula)", "", key="DCE").split(','))) if st.text_area("Dados censurados à esquerda (separados por vírgula)", key="DCE") else []
+DCD = list(map(float, st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD").split(','))) if st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD") else []
 
 if st.button("Estimar Parâmetros"):
     vetor_comum = np.array(DCp + DCE + DCD)
-    eta_max = max(vetor_comum)
+    eta_max = 100 * max(vetor_comum) if len(vetor_comum) > 0 else 10000
     p_inicial = p_chute / 100
     bounds = [(max(p_inicial - 0.05, 0), p_inicial + 0.05), (0, 1), (0, 1), (0, 10), (0, eta_max)]
     
