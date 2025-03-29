@@ -38,9 +38,19 @@ def V_neg_log(parametros, DCp, DCE, DCD):
 st.title("Distribuição Mista")
 
 p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%):", min_value=0.0, max_value=100.0, key="p_chute")
-DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)", key="DCp").split(','))) 
-DCE = list(map(float, st.text_area("Dados censurados à esquerda (separados por vírgula)", "", key="DCE").split(','))) if st.text_area("Dados censurados à esquerda (separados por vírgula)", key="DCE") else []
-DCD = list(map(float, st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD").split(','))) if st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD") else []
+
+# Verifica se há dados antes de converter para float
+def processar_entrada(texto):
+    return [float(x.strip()) for x in texto.split(',') if x.strip()]
+
+DCp_texto = st.text_area("Dados completos (separados por vírgula)", key="DCp")
+DCE_texto = st.text_area("Dados censurados à esquerda (separados por vírgula)", key="DCE")
+DCD_texto = st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD")
+
+DCp = processar_entrada(DCp_texto)
+DCE = processar_entrada(DCE_texto)
+DCD = processar_entrada(DCD_texto)
+
 
 if st.button("Estimar Parâmetros"):
     vetor_comum = np.array(DCp + DCE + DCD)
