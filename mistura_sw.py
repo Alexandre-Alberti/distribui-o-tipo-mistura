@@ -35,16 +35,16 @@ def V_neg_log(parametros, DCp, DCE, DCD):
         Vs += sum(np.log10(R(t, beta_forte, eta_forte, beta_fraco, eta_fraco, p)) for t in DCD)
     return -Vs
 
-st.title("Estimativa de Parâmetros - Mistura de Weibulls")
+st.title("Distribuição Mista")
 
-p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%)", min_value=0.0, max_value=100.0, value=10.0)
-DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)", "324, 586, 667, 407").split(',')))
+p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%)", min_value=0.0, max_value=100.0)
+DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)").split(','))) if st.text_area("Dados completos (separados por vírgula)") else []
 DCE = list(map(float, st.text_area("Dados censurados à esquerda (separados por vírgula)", "").split(','))) if st.text_area("Dados censurados à esquerda (separados por vírgula)") else []
 DCD = list(map(float, st.text_area("Dados censurados à direita (separados por vírgula)", "700, 700").split(','))) if st.text_area("Dados censurados à direita (separados por vírgula)") else []
 
 if st.button("Estimar Parâmetros"):
     vetor_comum = np.array(DCp + DCE + DCD)
-    eta_max = 100 * max(vetor_comum) if len(vetor_comum) > 0 else 10000
+    eta_max = max(vetor_comum)
     p_inicial = p_chute / 100
     bounds = [(max(p_inicial - 0.05, 0), p_inicial + 0.05), (0, 1), (0, 1), (0, 10), (0, eta_max)]
     
