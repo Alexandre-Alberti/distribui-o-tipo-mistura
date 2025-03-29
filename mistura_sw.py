@@ -38,7 +38,7 @@ def V_neg_log(parametros, DCp, DCE, DCD):
 st.title("Distribuição Mista")
 
 p_chute = st.number_input("Estimativa inicial do percentual de itens fracos (%):", min_value=0.0, max_value=100.0, key="p_chute")
-DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)", key="DCp").split(','))) if st.text_area("Dados completos (separados por vírgula)", key="DCp") else []
+DCp = list(map(float, st.text_area("Dados completos (separados por vírgula)", key="DCp").split(','))) 
 DCE = list(map(float, st.text_area("Dados censurados à esquerda (separados por vírgula)", "", key="DCE").split(','))) if st.text_area("Dados censurados à esquerda (separados por vírgula)", key="DCE") else []
 DCD = list(map(float, st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD").split(','))) if st.text_area("Dados censurados à direita (separados por vírgula)", key="DCD") else []
 
