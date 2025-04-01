@@ -56,7 +56,7 @@ if st.button("Estimar Parâmetros"):
     vetor_comum = np.array(DCp + DCE + DCD)
     eta_max = 100 * max(vetor_comum) if len(vetor_comum) > 0 else 10000
     p_inicial = p_chute / 100
-    bounds = [(max(p_inicial - 0.05, 0), p_inicial + 0.05), (0, 10), (0, 1), (0, 10), (0, eta_max)]
+    bounds = [(max(p_inicial - 0.05, 0), p_inicial + 0.05), (0, 1), (0, 1), (0, 10), (0, eta_max)]
     
     res = differential_evolution(lambda x: V_neg_log(x, DCp, DCE, DCD), bounds)
     par = res.x
